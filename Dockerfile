@@ -9,19 +9,16 @@
 ################################################################################
 
 # Create a stage for resolving and downloading dependencies.
-FROM eclipse-temurin:21-jdk-jammy as deps
-
-WORKDIR /build
+FROM gradle:8.5-jdk21 AS build
 
 # Copy the mvnw wrapper with executable permissions.
-COPY --chmod=0755 mvnw mvnw
-COPY .mvn/ .mvn/
+COPY --chown=gradle:gradle . /home/gradle/project
+WORKDIR /home/gradle/project
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.m2 so that subsequent builds don't have to
 # re-download packages.
-RUN --mount=type=bind,source=pom.xml,target=pom.xml \
-    --mount=type=cache,target=/root/.m2 ./mvnw dependency:go-offline -DskipTests
+RUN gradle clean bootJar --no-daemon
 
 ################################################################################
 
@@ -31,6 +28,8 @@ RUN --mount=type=bind,source=pom.xml,target=pom.xml \
 # jar and instead relies on an application server like Apache Tomcat, you'll need to update this
 # stage with the correct filename of your package and update the base image of the "final" stage
 # use the relevant app server, e.g., using tomcat (https://hub.docker.com/_/tomcat/) as a base image.
+FROM eclipse-temurin:21-jre-jammy
+
 FROM deps as package
 
 WORKDIR /build
@@ -70,7 +69,7 @@ RUN adduser \
 USER appuser
 
 # Copy the executable from the "package" stage.
-COPY --from=package build/target/app.jar app.jar
+COPY --from=build /home/gradle/project/build/libs/*.jar app.jar
 
 EXPOSE 8080
 

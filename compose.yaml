@@ -8,11 +8,42 @@
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
 services:
-  server:
+  mysql:
+    image: mysql:8
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: celc_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: rl29082003
+      MYSQL_ROOT_PASSWORD: rl29082003
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  app:
     build:
       context: .
+    container_name: spring-api
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/celcdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rl29082003
     ports:
       - 8080:8080
+    networks:
+      - app-network
+volumes: 
+  mysql_data:
+
+networks: 
+  app-network:
+    driver: bridge
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
