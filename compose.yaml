@@ -14,8 +14,6 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: celc_db
-      MYSQL_USER: root
-      MYSQL_PASSWORD: rl29082003
       MYSQL_ROOT_PASSWORD: rl29082003
     ports:
       - "3306:3306"
@@ -31,17 +29,17 @@ services:
     depends_on:
       - mysql
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/celcdb
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/celc_db
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: rl29082003
     ports:
       - 8080:8080
     networks:
       - app-network
-volumes: 
+volumes:
   mysql_data:
 
-networks: 
+networks:
   app-network:
     driver: bridge
 
