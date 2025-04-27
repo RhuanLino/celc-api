@@ -2,15 +2,13 @@ package com.celc.api.dtos;
 
 public class LoginResponseDTO {
     
-    private String token;
     private boolean sucesso;
     private String mensagem;
-    private Long trabalhadorId;
+    private String token;
 
-    public LoginResponseDTO(boolean sucesso, String mensagem, Long trabalhadorId, String token) {
+    public LoginResponseDTO(boolean sucesso, String mensagem, String token) {
         this.sucesso = sucesso;
         this.mensagem = mensagem;
-        this.trabalhadorId = trabalhadorId;
         this.token = token;
     }
 
@@ -30,12 +28,12 @@ public class LoginResponseDTO {
         this.mensagem = mensagem;
     }
 
-    public Long getTrabalhadorId() {
-        return trabalhadorId;
+    public String getToken() {
+        return token;
     }
 
-    public void setTrabalhadorId(Long trabalhadorId) {
-        this.trabalhadorId = trabalhadorId;
+    public void setToken(String token) {
+        this.token = token;
     }
 }
 

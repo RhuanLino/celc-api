@@ -21,18 +21,40 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public LoginResponseDTO autenticar(LoginRequestDTO loginRequest) {
-        Trabalhador trabalhador = trabalhadorRepository.findByEmail(loginRequest.getEmail())
-            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    public LoginResponseDTO autenticar(LoginRequestDTO loginRequest) {        
+        try {
+            if (loginRequest.getEmail() == null || loginRequest.getEmail().isBlank()) {
+                return new LoginResponseDTO(false, "Email não informado", null);
+            }
 
-        boolean senhaOk = passwordEncoder.matches(loginRequest.getSenha(), trabalhador.getSenha());
+            if (loginRequest.getSenha() == null || loginRequest.getSenha().isBlank()) {
+                return new LoginResponseDTO(false, "Senha não informada", null);
+            }
 
-        if (!senhaOk) {
-            throw new RuntimeException("Senha incorreta");
+            Trabalhador trabalhador = trabalhadorRepository.findByEmail(loginRequest.getEmail())
+                .orElse(null);
+
+            if (trabalhador == null) {
+                return new LoginResponseDTO(false, "Usuário não encontrado", null);
+            }
+            
+            boolean senhaOk = passwordEncoder.matches(loginRequest.getSenha(), trabalhador.getSenha());
+            
+            if (!senhaOk) {
+                throw new RuntimeException("Senha incorreta");
+            }
+
+            String token;
+            try {
+                token = jwtUtil.generateToken(trabalhador.getEmail());
+            } catch (Exception e) {
+                return new LoginResponseDTO(false, "Erro ao gerar token: " + e.getMessage(), null);
+            }
+
+            return new LoginResponseDTO(true, "Login bem-sucedido", token);
+        } catch (Exception e) {
+            return new LoginResponseDTO(false, "Erro ao autenticar", null);
         }
-
-        String token = jwtUtil.generateToken(trabalhador.getEmail());
-        return new LoginResponseDTO(true, "Login bem-sucedido", null, token);
     }
     
 }

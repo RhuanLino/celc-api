@@ -1,11 +1,15 @@
 package com.celc.api.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
 
 @Entity
 @Table(name= "trabalhador")
@@ -15,12 +19,28 @@ public class Trabalhador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 255)
     private String nome;
-    private String nome_espiritual;
+
+    @Column(name = "nome_espiritual", length = 255)
+    private String nomeEspiritual;
+
+    @Column(nullable = false, length = 255, unique = true)
     private String email;
+
+    @Column(nullable = false, length = 255)
     private String senha;
+
+    @Column(columnDefinition = "BIT(1) default 0")
     private Boolean desligado;
 
+    @OneToMany(mappedBy = "trabalhador")
+    private List<Debitos> debitos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "trabalhador")
+    private List<Frequencia> frequencias = new ArrayList<>();
+
+    // Getters and Setters
     public String getEmail() {
         return email;
     }

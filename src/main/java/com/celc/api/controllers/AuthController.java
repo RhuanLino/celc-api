@@ -14,19 +14,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("auth")
 public class AuthController {
     
     @Autowired
     private AuthService authService;
 
-    @PostMapping("/login")
+    @PostMapping("login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequest) {
         try {
             LoginResponseDTO response = authService.autenticar(loginRequest);
+
+            if (!response.isSucesso()) {
+                return ResponseEntity
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .body(response);
+            }
+
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new LoginResponseDTO(false, "Erro ao fazer login",  null));
         }
     }
     
