@@ -22,7 +22,7 @@ public class Trabalhador {
     @Column(nullable = false, length = 255)
     private String nome;
 
-    @Column(name = "nome_espiritual", length = 255)
+    @Column(name = "nomeEspiritual", length = 255)
     private String nomeEspiritual;
 
     @Column(nullable = false, length = 255, unique = true)
@@ -31,8 +31,8 @@ public class Trabalhador {
     @Column(nullable = false, length = 255)
     private String senha;
 
-    @Column(columnDefinition = "BIT(1) default 0")
-    private Boolean desligado;
+    @Column(columnDefinition = "TINYINT(1) default 0")
+    private Boolean desligado = false;
 
     @OneToMany(mappedBy = "trabalhador")
     private List<Debitos> debitos = new ArrayList<>();
@@ -41,11 +41,35 @@ public class Trabalhador {
     private List<Frequencia> frequencias = new ArrayList<>();
 
     // Getters and Setters
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome (String nome) {
+        this.nome = nome;
+    }
+
+    public String getNomeEspiritual() {
+        return nomeEspiritual;
+    }
+
+    public void setNomeEspiritual (String nomeEspiritual) {
+        this.nomeEspiritual = nomeEspiritual;
+    }
+
     public String getEmail() {
         return email;
     }
 
+    public void setEmail (String email) {
+        this.email = email;
+    }
+
     public String getSenha() {
         return senha;
+    }
+
+    public void setSenha (String senha) {
+        this.senha = senha;
     }
 }

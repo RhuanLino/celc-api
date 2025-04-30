@@ -1,15 +1,13 @@
-package com.celc.api.dtos;
+package com.celc.api.dtos.Cadastro;
 
-public class LoginResponseDTO {
+public class CadastroTrabalhadorResponseDTO {
     
     private boolean sucesso;
     private String mensagem;
-    private String token;
 
-    public LoginResponseDTO(boolean sucesso, String mensagem, String token) {
+    public CadastroTrabalhadorResponseDTO(boolean sucesso, String mensagem) {
         this.sucesso = sucesso;
         this.mensagem = mensagem;
-        this.token = token;
     }
 
     public boolean isSucesso() {
@@ -27,13 +25,4 @@ public class LoginResponseDTO {
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
     }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }
-

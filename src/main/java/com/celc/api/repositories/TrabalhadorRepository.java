@@ -8,4 +8,6 @@ import com.celc.api.models.Trabalhador;
 
 public interface TrabalhadorRepository extends JpaRepository<Trabalhador, Long> {
     Optional<Trabalhador> findByEmail(String email);
+
+    boolean existsByEmail(String email);
 }

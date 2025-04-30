@@ -1,4 +1,4 @@
-package com.celc.api.dtos;
+package com.celc.api.dtos.Login;
 
 public class LoginRequestDTO {
     private String email;
