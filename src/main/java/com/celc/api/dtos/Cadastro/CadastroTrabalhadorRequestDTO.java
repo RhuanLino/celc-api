@@ -2,15 +2,15 @@ package com.celc.api.dtos.Cadastro;
 
 public class CadastroTrabalhadorRequestDTO {
     private String nome;
-    private String nome_espiritual;
+    private String nomeEspiritual;
     private String email;
     private String senha;
 
     public CadastroTrabalhadorRequestDTO() {}
 
-    public CadastroTrabalhadorRequestDTO(String nome, String nome_espiritual, String email, String senha) {
+    public CadastroTrabalhadorRequestDTO(String nome, String nomeEspiritual, String email, String senha) {
         this.nome = nome;
-        this.nome_espiritual = nome_espiritual;
+        this.nomeEspiritual = nomeEspiritual;
         this.email = email;
         this.senha = senha;
     }
@@ -26,11 +26,11 @@ public class CadastroTrabalhadorRequestDTO {
     }
 
     public String getNomeEspiritual() {
-        return nome_espiritual;
+        return nomeEspiritual;
     }
 
-    public void setNomeEspiritual (String nome_espiritual) {
-        this.nome_espiritual = nome_espiritual;
+    public void setNomeEspiritual (String nomeEspiritual) {
+        this.nomeEspiritual = nomeEspiritual;
     }
 
     public String getEmail() {

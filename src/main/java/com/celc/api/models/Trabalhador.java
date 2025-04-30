@@ -22,7 +22,7 @@ public class Trabalhador {
     @Column(nullable = false, length = 255)
     private String nome;
 
-    @Column(name = "nomeEspiritual", length = 255)
+    @Column(name = "nome_espiritual", length = 255)
     private String nomeEspiritual;
 
     @Column(nullable = false, length = 255, unique = true)
