@@ -13,9 +13,9 @@ services:
       context: .
     container_name: spring-api
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://ep-falling-paper-acrxlmnl-pooler.sa-east-1.aws.neon.tech/celc_db?sslmode=require
-      SPRING_DATASOURCE_USERNAME: rhuan
-      SPRING_DATASOURCE_PASSWORD: npg_ln1NrARoVmj6
+      SPRING_DATASOURCE_URL: jdbc:postgresql://ep-lingering-lab-acf7wv91-pooler.sa-east-1.aws.neon.tech/celc_db?sslmode=require
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: npg_K1RBYCDxUyO0
       JWT_SECRET: DDCuY0P41bHvctRaYmFsJI0eZ0rLI2w03qycXhJmJTE=
     ports:
       - 8080:8080
