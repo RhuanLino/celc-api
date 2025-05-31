@@ -28,7 +28,7 @@ public class Debitos {
     private Trabalhador trabalhador;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('LIVRARIA', 'MENSALIDADE')", nullable = false)
+    @Column(nullable = false)
     private TipoDebito tipo;
 
     @Column(nullable = false, precision = 10, scale = 0)

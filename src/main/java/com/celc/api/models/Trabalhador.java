@@ -12,9 +12,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name= "trabalhador")
+@Table(name = "trabalhador")
 public class Trabalhador {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,7 +31,7 @@ public class Trabalhador {
     @Column(nullable = false, length = 255)
     private String senha;
 
-    @Column(columnDefinition = "TINYINT(1) default 0")
+    @Column(nullable = false)
     private Boolean desligado = false;
 
     @OneToMany(mappedBy = "trabalhador")
@@ -45,7 +45,7 @@ public class Trabalhador {
         return nome;
     }
 
-    public void setNome (String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
@@ -53,7 +53,7 @@ public class Trabalhador {
         return nomeEspiritual;
     }
 
-    public void setNomeEspiritual (String nomeEspiritual) {
+    public void setNomeEspiritual(String nomeEspiritual) {
         this.nomeEspiritual = nomeEspiritual;
     }
 
@@ -61,7 +61,7 @@ public class Trabalhador {
         return email;
     }
 
-    public void setEmail (String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -69,7 +69,7 @@ public class Trabalhador {
         return senha;
     }
 
-    public void setSenha (String senha) {
+    public void setSenha(String senha) {
         this.senha = senha;
     }
 }
