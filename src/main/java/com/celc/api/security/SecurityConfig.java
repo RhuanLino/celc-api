@@ -19,6 +19,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/debitos/**").authenticated()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
