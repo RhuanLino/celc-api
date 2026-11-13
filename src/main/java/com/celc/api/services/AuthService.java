@@ -4,18 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.celc.api.dtos.Cadastro.CadastroTrabalhadorRequestDTO;
-import com.celc.api.dtos.Cadastro.CadastroTrabalhadorResponseDTO;
+import com.celc.api.dtos.Cadastro.CadastroUsuarioRequestDTO;
+import com.celc.api.dtos.Cadastro.CadastroUsuarioResponseDTO;
 import com.celc.api.dtos.Login.LoginRequestDTO;
 import com.celc.api.dtos.Login.LoginResponseDTO;
-import com.celc.api.models.Trabalhador;
-import com.celc.api.repositories.TrabalhadorRepository;
+import com.celc.api.models.Usuario;
+import com.celc.api.repositories.UsuarioRepository;
 
 @Service
 public class AuthService {
 
     @Autowired
-    private TrabalhadorRepository trabalhadorRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -33,14 +33,14 @@ public class AuthService {
                 return new LoginResponseDTO(false, "Senha não informada", null);
             }
 
-            Trabalhador trabalhador = trabalhadorRepository.findByEmail(loginRequest.getEmail())
+            Usuario usuario = usuarioRepository.findByEmail(loginRequest.getEmail())
                     .orElse(null);
 
-            if (trabalhador == null) {
+            if (usuario == null) {
                 return new LoginResponseDTO(false, "Usuário não encontrado", null);
             }
 
-            boolean senhaOk = passwordEncoder.matches(loginRequest.getSenha(), trabalhador.getSenha());
+            boolean senhaOk = passwordEncoder.matches(loginRequest.getSenha(), usuario.getSenha());
 
             if (!senhaOk) {
                 throw new RuntimeException("Senha incorreta");
@@ -48,7 +48,7 @@ public class AuthService {
 
             String token;
             try {
-                token = jwtUtil.generateToken(trabalhador.getEmail());
+                token = jwtUtil.generateToken(usuario.getEmail());
             } catch (Exception e) {
                 return new LoginResponseDTO(false, "Erro ao gerar token: " + e.getMessage(), null);
             }
@@ -59,43 +59,43 @@ public class AuthService {
         }
     }
 
-    public CadastroTrabalhadorResponseDTO cadastrar(CadastroTrabalhadorRequestDTO cadastroTrabalhadorRequest) {
+    public CadastroUsuarioResponseDTO cadastrar(CadastroUsuarioRequestDTO cadastroUsuarioRequest) {
         try {
-            if (cadastroTrabalhadorRequest.getNome() == null || cadastroTrabalhadorRequest.getNome().isBlank()) {
-                return new CadastroTrabalhadorResponseDTO(false, "Nome não informado.");
+            if (cadastroUsuarioRequest.getNome() == null || cadastroUsuarioRequest.getNome().isBlank()) {
+                return new CadastroUsuarioResponseDTO(false, "Nome não informado.");
             }
 
-            if (cadastroTrabalhadorRequest.getEmail() == null || cadastroTrabalhadorRequest.getEmail().isBlank()) {
-                return new CadastroTrabalhadorResponseDTO(false, "Email não informado.");
+            if (cadastroUsuarioRequest.getEmail() == null || cadastroUsuarioRequest.getEmail().isBlank()) {
+                return new CadastroUsuarioResponseDTO(false, "Email não informado.");
             }
 
-            if (cadastroTrabalhadorRequest.getSenha() == null || cadastroTrabalhadorRequest.getSenha().isBlank()) {
-                return new CadastroTrabalhadorResponseDTO(false, "Senha não informada.");
+            if (cadastroUsuarioRequest.getSenha() == null || cadastroUsuarioRequest.getSenha().isBlank()) {
+                return new CadastroUsuarioResponseDTO(false, "Senha não informada.");
             }
 
-            if (trabalhadorRepository.existsByEmail(cadastroTrabalhadorRequest.getEmail())) {
+            if (usuarioRepository.existsByEmail(cadastroUsuarioRequest.getEmail())) {
                 throw new RuntimeException("Já existe um usuário com este email!");
             }
 
             try {
-                Trabalhador novo = new Trabalhador();
-                novo.setNome(cadastroTrabalhadorRequest.getNome());
-                novo.setEmail(cadastroTrabalhadorRequest.getEmail());
-                novo.setSenha(passwordEncoder.encode(cadastroTrabalhadorRequest.getSenha()));
+                Usuario novo = new Usuario();
+                novo.setNome(cadastroUsuarioRequest.getNome());
+                novo.setEmail(cadastroUsuarioRequest.getEmail());
+                novo.setSenha(passwordEncoder.encode(cadastroUsuarioRequest.getSenha()));
 
                 // Campo opcional
-                if (cadastroTrabalhadorRequest.getNomeEspiritual() != null) {
-                    novo.setNomeEspiritual(cadastroTrabalhadorRequest.getNomeEspiritual());
+                if (cadastroUsuarioRequest.getNomeEspiritual() != null) {
+                    novo.setNomeEspiritual(cadastroUsuarioRequest.getNomeEspiritual());
                 }
                 
-                trabalhadorRepository.save(novo);
+                usuarioRepository.save(novo);
 
-                return new CadastroTrabalhadorResponseDTO(true, "Usuário cadastrado com sucesso!");
+                return new CadastroUsuarioResponseDTO(true, "Usuário cadastrado com sucesso!");
             } catch (Exception e) {
-                return new CadastroTrabalhadorResponseDTO(false, "Erro ao cadastrar usuário");
+                return new CadastroUsuarioResponseDTO(false, "Erro ao cadastrar usuário");
             }
         } catch (Exception e) {
-            return new CadastroTrabalhadorResponseDTO(false, "Houve um erro no cadastro");
+            return new CadastroUsuarioResponseDTO(false, "Houve um erro no cadastro");
         }
     }
 }

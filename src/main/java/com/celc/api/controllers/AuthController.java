@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.celc.api.dtos.Cadastro.CadastroTrabalhadorRequestDTO;
-import com.celc.api.dtos.Cadastro.CadastroTrabalhadorResponseDTO;
+import com.celc.api.dtos.Cadastro.CadastroUsuarioRequestDTO;
+import com.celc.api.dtos.Cadastro.CadastroUsuarioResponseDTO;
 import com.celc.api.dtos.Login.LoginRequestDTO;
 import com.celc.api.dtos.Login.LoginResponseDTO;
 import com.celc.api.services.AuthService;
@@ -40,9 +40,9 @@ public class AuthController {
     }
     
     @PostMapping("/cadastro")
-    public ResponseEntity<CadastroTrabalhadorResponseDTO> cadastrar(@RequestBody CadastroTrabalhadorRequestDTO cadastroTrabalhadorRequestDTO) {
+    public ResponseEntity<CadastroUsuarioResponseDTO> cadastrar(@RequestBody CadastroUsuarioRequestDTO cadastroTrabalhadorRequestDTO) {
         try {
-            CadastroTrabalhadorResponseDTO response = authService.cadastrar(cadastroTrabalhadorRequestDTO);
+            CadastroUsuarioResponseDTO response = authService.cadastrar(cadastroTrabalhadorRequestDTO);
 
             if (!response.isSucesso()) {
                 return ResponseEntity
@@ -52,7 +52,7 @@ public class AuthController {
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new CadastroTrabalhadorResponseDTO(false, "Erro ao fazer cadastro c"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new CadastroUsuarioResponseDTO(false, "Erro ao fazer cadastro c"));
         }
     }
     
