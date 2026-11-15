@@ -131,4 +131,136 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getRg() {
+        return rg;
+    }
+
+    public void setRg(String rg) {
+        this.rg = rg;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getPai() {
+        return pai;
+    }
+
+    public void setPai(String pai) {
+        this.pai = pai;
+    }
+
+    public String getMae() {
+        return mae;
+    }
+
+    public void setMae(String mae) {
+        this.mae = mae;
+    }
+
+    public EstadoCivil getEstadoCivil() {
+        return estadoCivil;
+    }
+
+    public void setEstadoCivil(EstadoCivil estadoCivil) {
+        this.estadoCivil = estadoCivil;
+    }
+
+    public Medium getMedium() {
+        return medium;
+    }
+
+    public void setMedium(Medium medium) {
+        this.medium = medium;
+    }
+
+    public Integer getQuadro() {
+        return quadro;
+    }
+
+    public void setQuadro(Integer quadro) {
+        this.quadro = quadro;
+    }
+
+    public Integer getAnoIngresso() {
+        return anoIngresso;
+    }
+
+    public void setAnoIngresso(Integer anoIngresso) {
+        this.anoIngresso = anoIngresso;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public BigDecimal getValorMensalidade() {
+        return valorMensalidade;
+    }
+
+    public void setValorMensalidade(BigDecimal valorMensalidade) {
+        this.valorMensalidade = valorMensalidade;
+    }
+
+    public boolean isDesligado() {
+        return desligado;
+    }
+
+    public void setDesligado(boolean desligado) {
+        this.desligado = desligado;
+    }
 }

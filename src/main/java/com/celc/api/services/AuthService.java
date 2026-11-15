@@ -65,6 +65,10 @@ public class AuthService {
                 return new CadastroUsuarioResponseDTO(false, "Nome não informado.");
             }
 
+            if (cadastroUsuarioRequest.getUsername() == null || cadastroUsuarioRequest.getUsername().isBlank()) {
+                return new CadastroUsuarioResponseDTO(false, "Username não informado.");
+            }
+
             if (cadastroUsuarioRequest.getEmail() == null || cadastroUsuarioRequest.getEmail().isBlank()) {
                 return new CadastroUsuarioResponseDTO(false, "Email não informado.");
             }
@@ -74,20 +78,55 @@ public class AuthService {
             }
 
             if (usuarioRepository.existsByEmail(cadastroUsuarioRequest.getEmail())) {
-                throw new RuntimeException("Já existe um usuário com este email!");
+                return new CadastroUsuarioResponseDTO(false, "Já existe um usuário com este email.");
+            }
+
+            if (usuarioRepository.existsByUsername(cadastroUsuarioRequest.getUsername())) {
+                return new CadastroUsuarioResponseDTO(false, "Já existe um usuário com este username.");
+            }
+
+            if (cadastroUsuarioRequest.getCpf() != null && !cadastroUsuarioRequest.getCpf().isBlank()
+                    && usuarioRepository.existsByCpf(cadastroUsuarioRequest.getCpf())) {
+                return new CadastroUsuarioResponseDTO(false, "Já existe um usuário com este CPF.");
+            }
+
+            if (cadastroUsuarioRequest.getNomeEspiritual() != null && !cadastroUsuarioRequest.getNomeEspiritual().isBlank()
+                    && usuarioRepository.existsByNomeEspiritual(cadastroUsuarioRequest.getNomeEspiritual())) {
+                return new CadastroUsuarioResponseDTO(false, "Já existe um usuário com este nome espiritual.");
             }
 
             try {
                 Usuario novo = new Usuario();
                 novo.setNome(cadastroUsuarioRequest.getNome());
+                novo.setUsername(cadastroUsuarioRequest.getUsername());
                 novo.setEmail(cadastroUsuarioRequest.getEmail());
                 novo.setSenha(passwordEncoder.encode(cadastroUsuarioRequest.getSenha()));
 
-                // Campo opcional
-                if (cadastroUsuarioRequest.getNomeEspiritual() != null) {
-                    novo.setNomeEspiritual(cadastroUsuarioRequest.getNomeEspiritual());
+                novo.setNomeEspiritual(cadastroUsuarioRequest.getNomeEspiritual());
+                novo.setCpf(cadastroUsuarioRequest.getCpf());
+                novo.setRg(cadastroUsuarioRequest.getRg());
+                novo.setDataNascimento(cadastroUsuarioRequest.getDataNascimento());
+                novo.setTelefone(cadastroUsuarioRequest.getTelefone());
+                novo.setPai(cadastroUsuarioRequest.getPai());
+                novo.setMae(cadastroUsuarioRequest.getMae());
+                novo.setCidade(cadastroUsuarioRequest.getCidade());
+                novo.setUf(cadastroUsuarioRequest.getUf());
+                novo.setComplemento(cadastroUsuarioRequest.getComplemento());
+                novo.setAnoIngresso(cadastroUsuarioRequest.getAnoIngresso());
+                novo.setValorMensalidade(cadastroUsuarioRequest.getValorMensalidade());
+
+                if (cadastroUsuarioRequest.getEstadoCivil() != null) {
+                    novo.setEstadoCivil(cadastroUsuarioRequest.getEstadoCivil());
                 }
-                
+
+                if (cadastroUsuarioRequest.getMedium() != null) {
+                    novo.setMedium(cadastroUsuarioRequest.getMedium());
+                }
+
+                if (cadastroUsuarioRequest.getQuadro() != null) {
+                    novo.setQuadro(cadastroUsuarioRequest.getQuadro());
+                }
+
                 usuarioRepository.save(novo);
 
                 return new CadastroUsuarioResponseDTO(true, "Usuário cadastrado com sucesso!");
