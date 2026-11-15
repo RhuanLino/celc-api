@@ -3,6 +3,8 @@ package com.celc.api.models;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -50,6 +52,14 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     @Column(name = "medium")
     private Medium medium = Medium.ALUNO;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "usuario_perfis",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "perfil_id")
+    )
+    private Set<Perfil> perfis = new HashSet<>();
 
     @Column(name = "pai")
     private String pai;
