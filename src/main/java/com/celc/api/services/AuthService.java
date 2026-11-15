@@ -25,15 +25,15 @@ public class AuthService {
 
     public LoginResponseDTO autenticar(LoginRequestDTO loginRequest) {
         try {
-            if (loginRequest.getEmail() == null || loginRequest.getEmail().isBlank()) {
-                return new LoginResponseDTO(false, "Email não informado", null);
+            if (loginRequest.getUsername() == null || loginRequest.getUsername().isBlank()) {
+                return new LoginResponseDTO(false, "Usuário não informado", null);
             }
 
             if (loginRequest.getSenha() == null || loginRequest.getSenha().isBlank()) {
                 return new LoginResponseDTO(false, "Senha não informada", null);
             }
 
-            Usuario usuario = usuarioRepository.findByEmail(loginRequest.getEmail())
+            Usuario usuario = usuarioRepository.findByUsername(loginRequest.getUsername())
                     .orElse(null);
 
             if (usuario == null) {

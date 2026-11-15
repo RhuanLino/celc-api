@@ -1,19 +1,19 @@
 package com.celc.api.dtos.Login;
 
 public class LoginRequestDTO {
-    private String email;
+    private String username;
     private String senha;
 
     public LoginRequestDTO() {
     }
 
-    public LoginRequestDTO(String email, String senha) {
-        this.email = email;
+    public LoginRequestDTO(String username, String senha) {
+        this.username = username;
         this.senha = senha;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
     public String getSenha() {
