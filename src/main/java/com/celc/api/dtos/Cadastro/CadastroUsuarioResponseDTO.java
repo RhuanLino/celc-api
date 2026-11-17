@@ -1,11 +1,11 @@
 package com.celc.api.dtos.Cadastro;
 
-public class CadastroTrabalhadorResponseDTO {
+public class CadastroUsuarioResponseDTO {
     
     private boolean sucesso;
     private String mensagem;
 
-    public CadastroTrabalhadorResponseDTO(boolean sucesso, String mensagem) {
+    public CadastroUsuarioResponseDTO(boolean sucesso, String mensagem) {
         this.sucesso = sucesso;
         this.mensagem = mensagem;
     }
